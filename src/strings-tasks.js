@@ -503,7 +503,7 @@ function extractEmails(str) {
 function encodeToRot13(str) {
   const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
-  return str.replace(/[a-zA-Z]/g, function (char) {
+  return str.replace(/[a-zA-Z]/g, (char) => {
     const index = input.indexOf(char);
     return index !== -1 ? output[index] : char;
   });
