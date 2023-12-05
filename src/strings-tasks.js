@@ -339,8 +339,9 @@ function countVowels(str) {
  *   isPalindrome('No lemon, no melon') => true
  */
 function isPalindrome(str) {
-  const cleanStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-  return cleanStr === cleanStr.split('').reverse().join('');
+  const cleanStr = str.toLowerCase().replace(/\W/g, '');
+  const reversStr = cleanStr.split('').reverse().join('');
+  return cleanStr === reversStr;
 }
 
 /**
@@ -356,14 +357,17 @@ function isPalindrome(str) {
  *   findLongestWord('No words here') => 'words'
  */
 function findLongestWord(sentence) {
-  const sentenceSplit = sentence.split(' ');
-  let longestWordLength = 0;
-  for (let i = 0; i < sentenceSplit.length; i + 1) {
-    if (sentenceSplit[i].length > longestWordLength) {
-      longestWordLength = sentenceSplit[i].length;
-    }
+  const words = sentence.split(' ');
+
+  if (words.length === 0) {
+    return null;
   }
-  return longestWordLength;
+
+  const longestWord = words.reduce((longest, current) => {
+    return current.length > longest.length ? current : longest;
+  }, words[0]);
+
+  return longestWord;
 }
 
 /**
@@ -477,7 +481,7 @@ function unbracketTag(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-  return str || [];
+  return str.split(';');
 }
 
 /**
@@ -496,8 +500,13 @@ function extractEmails(str) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  return str.replace(/[a-zA-Z]/g, function (char) {
+    const index = input.indexOf(char);
+    return index !== -1 ? output[index] : char;
+  });
 }
 
 /**
@@ -524,8 +533,64 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cards = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+
+  const index = cards.indexOf(value);
+  return index;
 }
 
 module.exports = {
